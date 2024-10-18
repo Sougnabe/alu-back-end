@@ -6,8 +6,7 @@ import requests
 import sys
 
 
-def fetch_employee_todo_progress(employee_id):
-    
+def fetch_employee_todo_progress(employee_id): 
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     user_response = requests.get(user_url)
     if user_response.status_code != 200:
