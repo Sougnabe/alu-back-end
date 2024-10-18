@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
-'''module is documented'''
+'''documented'''
 
 import requests
 import sys
 
 
 def fetch_employee_todo_progress(employee_id):
+    
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     user_response = requests.get(user_url)
     if user_response.status_code != 200:
@@ -18,12 +19,15 @@ def fetch_employee_todo_progress(employee_id):
 
     todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
     todos_response = requests.get(todos_url)
-
     todos = todos_response.json()
+
     total_tasks = len(todos)
     done_tasks = [task for task in todos if task.get("completed")]
 
-    print(f"Employee {employee_name} is done with tasks({len(done_tasks)}/{total_tasks}):")
+    print(
+        f"Employee {employee_name} is done with tasks"
+        f"({len(done_tasks)}/{total_tasks}):"
+    )
     for task in done_tasks:
         print(f"\t{task.get('title')}")
 
