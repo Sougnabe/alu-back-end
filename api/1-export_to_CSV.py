@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#module is documented
+'''module is documented'''
 import requests
 import sys
 #module is documented
