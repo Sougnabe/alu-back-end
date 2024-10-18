@@ -18,17 +18,21 @@ def fetch_employee_todo_progress(employee_id):
     employee = user_response.json()
     employee_name = employee.get("name")
 
-    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    todos_url = (
+        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    )
     todos_response = requests.get(todos_url)
     todos = todos_response.json()
 
-    # Exporting to CSV
     csv_filename = f"{employee_id}.csv"
     with open(csv_filename, mode='w', newline='') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for task in todos:
             writer.writerow([
-                employee_id, employee_name, task.get("completed"), task.get("title")
+                employee_id,
+                employee_name,
+                task.get("completed"),
+                task.get("title")
             ])
 
     print(f"Tasks exported to {csv_filename}")
