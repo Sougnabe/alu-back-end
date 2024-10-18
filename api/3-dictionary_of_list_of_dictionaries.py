@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    documented
+    python script that exports data in the JSON format
 """
 import json
 import requests
@@ -9,7 +9,7 @@ if __name__ == "__main__":
     url = "https://jsonplaceholder.typicode.com/"
     users = requests.get(url + "users").json()
     """
-        documented
+        export to JSON
     """
 
     with open("todo_all_employees.json", "w") as jsonfile:
