@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-'''documented'''
+'''python3 -c 'print(__import__("my_module").__doc__)''''
 
 import requests
 import sys
