@@ -51,4 +51,3 @@ if __name__ == "__main__":
     for k, v in tasks.items():
         if v is True:
             print("\t {}".format(k))
-            
