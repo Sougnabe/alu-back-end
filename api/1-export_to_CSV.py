@@ -1,50 +1,50 @@
 #!/usr/bin/python3
-
-'''documented'''
+""""documented"""
 
 import csv
+import json
 import requests
-import sys
-
-
-def fetch_employee_todo_progress(employee_id):
-    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    user_response = requests.get(user_url)
-
-    if user_response.status_code != 200:
-        print("Employee not found")
-        return
-
-    employee = user_response.json()
-    employee_name = employee.get("name")
-
-    todos_url = (
-        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    )
-    todos_response = requests.get(todos_url)
-    todos = todos_response.json()
-
-    csv_filename = f"{employee_id}.csv"
-    with open(csv_filename, mode='w', newline='') as file:
-        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-        for task in todos:
-            writer.writerow([
-                employee_id,
-                employee_name,
-                task.get("completed"),
-                task.get("title")
-            ])
-
-    print(f"Tasks exported to {csv_filename}")
+from sys import argv
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 1-export_to_CSV.py <employee_id>")
-        sys.exit(1)
+    """
+        documented
+    """
+    request_employee = requests.get(
+        'https://jsonplaceholder.typicode.com/users/{}/'.format(argv[1]))
+    """
+        documented
+    """
+    user = json.loads(request_employee.text)
+    """
+        documented
+    """
+    username = user.get("username")
 
-    try:
-        employee_id = int(sys.argv[1])
-        fetch_employee_todo_progress(employee_id)
-    except ValueError:
-        print("Employee ID must be an integer.")
+    """
+        documented
+    """
+    request_todos = requests.get(
+        'https://jsonplaceholder.typicode.com/users/{}/todos'.format(argv[1]))
+    """
+        documented
+    """
+    tasks = {}
+    """
+        documented
+    """
+    user_todos = json.loads(request_todos.text)
+    """
+        documented
+    """
+    for dictionary in user_todos:
+        tasks.update({dictionary.get("title"): dictionary.get("completed")})
+
+    """
+        documented
+    """
+    with open('{}.csv'.format(argv[1]), mode='w') as file:
+        file_editor = csv.writer(file, delimiter=',', quoting=csv.QUOTE_ALL)
+        for k, v in tasks.items():
+            file_editor.writerow([argv[1], username, v, k])
